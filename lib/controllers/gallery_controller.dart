@@ -22,10 +22,12 @@ class GalleryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // in onInit initialize scroll controller and load the API data.
     initScrollController();
     loadGallery("");
   }
 
+  /// loadGallery is a method to call the image data.
   loadGallery(String searchQuery) async {
     try {
       page = 1;
@@ -39,6 +41,7 @@ class GalleryController extends GetxController {
     }
   }
 
+  /// loadMoreGallery is a method, which will be called when the user wants more image to be displayed.
   loadMoreGallery(String searchQuery) async {
     try {
       page++;
@@ -57,6 +60,7 @@ class GalleryController extends GetxController {
     }
   }
 
+  /// onSearchChanged is a method will be called when user completes entering the query in TextFormField.
   onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 1000), () {
@@ -64,6 +68,7 @@ class GalleryController extends GetxController {
     });
   }
 
+  /// getCrossAxisCount is method to get the dynamic crossAxisCount based on screen size.
   int getCrossAxisCount(BuildContext context) {
     if (getScreenWidth(context).toInt() < 360) {
       return 1;
@@ -78,10 +83,12 @@ class GalleryController extends GetxController {
     }
   }
 
+  /// getScreenWidth is a method to get the max width of the screen.
   double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
 
+  /// initScrollController is method to listen to the position of the scroll.
   initScrollController() {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -93,6 +100,7 @@ class GalleryController extends GetxController {
     });
   }
 
+  /// displayNumberInKMB is a method which display the numbers in K, M, B.
   String displayNumberInKMB(int num) {
     if (num > 999 && num < 99999) {
       return "${(num / 1000).toStringAsFixed(1)} K";
@@ -107,6 +115,7 @@ class GalleryController extends GetxController {
     }
   }
 
+  /// backPressed is a method which will be called when back button is pressed.
   Future<bool> backPressed(BuildContext buildContext) async {
     bool willLeave = false;
     await showDialog(

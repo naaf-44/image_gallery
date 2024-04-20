@@ -5,6 +5,7 @@ import 'package:image_gallery/constants/api_urls.dart';
 import 'package:image_gallery/model_class/gallery_model.dart';
 
 class GalleryApiRequest {
+  /// getGalleryImage is a method which is used to get the gallery image data.
   static getGalleryImage({String searchQuery = "", int page = 1}) async {
     var response = await ApiRequest.getRequest(
         "${ApiUrls.baseUrl}${ApiUrls.authKey}${ApiUrls.searchQuery.replaceAll("{searchQuery}", searchQuery)}${ApiUrls.page.replaceAll("{page}", page.toString())}");
