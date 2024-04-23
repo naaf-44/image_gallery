@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery/api_requests/gallery_api_request.dart';
@@ -55,6 +56,7 @@ class GalleryController extends GetxController {
       return galleryModel;
     } catch (error) {
       isMoreGalleryLoading(false);
+      page--;
     } finally {
       isMoreGalleryLoading(false);
     }
@@ -70,17 +72,13 @@ class GalleryController extends GetxController {
 
   /// getCrossAxisCount is method to get the dynamic crossAxisCount based on screen size.
   int getCrossAxisCount(BuildContext context) {
-    if (getScreenWidth(context).toInt() < 360) {
+    double maxWidth = getScreenWidth(context);
+
+    int idealWidth = maxWidth.toInt() ~/ 320;
+    if(maxWidth <=320){
       return 1;
-    } else if (getScreenWidth(context).toInt() >= 1000) {
-      return 6;
-    } else {
-      if (context.isPhone) {
-        return 2;
-      } else {
-        return 4;
-      }
     }
+    return idealWidth + 1;
   }
 
   /// getScreenWidth is a method to get the max width of the screen.
