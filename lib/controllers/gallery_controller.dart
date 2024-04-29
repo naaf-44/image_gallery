@@ -75,7 +75,7 @@ class GalleryController extends GetxController {
     double maxWidth = getScreenWidth(context);
 
     int idealWidth = maxWidth.toInt() ~/ 320;
-    if(maxWidth <=320){
+    if (maxWidth <= 320) {
       return 1;
     }
     return idealWidth + 1;
@@ -126,8 +126,12 @@ class GalleryController extends GetxController {
           actions: [
             ElevatedButton(
               onPressed: () {
-                willLeave = true;
-                exit(0);
+                if (kIsWeb) {
+                  Get.back();
+                } else {
+                  willLeave = true;
+                  exit(0);
+                }
               },
               child: const Text("Yes"),
             ),

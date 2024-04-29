@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,16 @@ class _GalleryState extends State<Gallery> {
   // Create instance of GalleryController
   GalleryController galleryController = Get.put(GalleryController());
 
+  StreamController streamController = StreamController();
+
+  @override
+  void initState() {
+    super.initState();
+    Stream stream = streamController.stream;
+    stream.listen((event) {
+      print("DATA: $event");
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -71,8 +83,9 @@ class _GalleryState extends State<Gallery> {
                                         width: galleryController.boxSize,
                                         child: InkWell(
                                           onTap: () {
-                                            Get.to(ViewImage(imageUrl: galleryController.galleryModel!.hits![index].largeImageURL),
-                                                transition: Transition.zoom, duration: const Duration(milliseconds: 500));
+                                            streamController.add(10);
+                                            /*Get.to(ViewImage(imageUrl: galleryController.galleryModel!.hits![index].largeImageURL),
+                                                transition: Transition.zoom, duration: const Duration(milliseconds: 500));*/
                                           },
                                           child: CachedNetworkImage(
                                             imageUrl: galleryController.galleryModel!.hits![index].previewURL!,
